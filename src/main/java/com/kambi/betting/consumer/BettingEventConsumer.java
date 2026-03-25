@@ -4,15 +4,20 @@ import com.kambi.betting.model.BetDocument;
 import com.kambi.betting.model.BettingEvent;
 import com.kambi.betting.model.OddsDocument;
 import com.kambi.betting.repository.BetRepository;
+import com.kambi.betting.repository.BettingEventRepository;
 import com.kambi.betting.repository.OddsRepository;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
+
+import com.kambi.betting.Entity.BettingEventEntity;
 
 /**
 
@@ -29,6 +34,8 @@ import java.util.UUID;
   
   private final BetRepository   betRepository;
   private final OddsRepository  oddsRepository;
+  @Autowired
+    private BettingEventRepository repository; 
   
   public BettingEventConsumer(BetRepository betRepository, OddsRepository oddsRepository) {
   this.betRepository  = betRepository;
@@ -93,4 +100,15 @@ import java.util.UUID;
 
   
   }
+  
+ @KafkaListener(topics = "${betting.kafka.topics.bet-placed}")
+    public void consumeBetPlaced(String message) {
+        BettingEventEntity event = new BettingEventEntity();
+        event.setEventType("BET_PLACED");
+        event.setTimestamp(LocalDateTime.now());
+        // parse message fields...
+        repository.save(event);
+    }
+
+
   }
