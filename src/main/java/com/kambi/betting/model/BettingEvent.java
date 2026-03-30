@@ -60,6 +60,7 @@ import java.time.Instant;
     String betId,
     String customerId,
     String matchId,
+    String market,
     String outcome,
     double odds,
     long stake

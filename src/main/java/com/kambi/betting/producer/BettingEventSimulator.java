@@ -78,6 +78,7 @@ import java.util.UUID;
            "bet:" + UUID.randomUUID(),
            randomFrom(CUSTOMERS),
            randomFrom(MATCH_IDS),
+           randomFrom(MARKETS),
            randomFrom(OUTCOMES),
            Math.round(odds * 100.0) / 100.0,
            stake

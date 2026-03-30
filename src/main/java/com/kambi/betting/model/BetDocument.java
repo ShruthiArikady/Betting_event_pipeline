@@ -1,26 +1,22 @@
 package com.kambi.betting.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.index.Indexed;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.time.Instant;
 
-/**
-
-- MongoDB document storing a processed bet.
-  */
-  @Document(collection = "bets")
-  public record BetDocument(
-  @Id String id,
-  @Indexed String betId,
-  @Indexed String customerId,
-  String matchId,
-  String outcome,
-  double odds,
-  long stake,
-  long potentialPayout,   // stake * odds (in minor units)
-  String status,          // ACCEPTED, REJECTED
-  Instant placedAt,
-  Instant processedAt
-  ) {}
+@Entity
+@Table(name = "bets")
+public record BetDocument(
+    @Id String id,
+    String betId,
+    String customerId,
+    String matchId,
+    String market,
+    String outcome,
+    double odds,
+    double stake,
+    double potentialPayout,
+    String status,
+    Instant placedAt
+) {}
