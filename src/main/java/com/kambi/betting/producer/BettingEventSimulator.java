@@ -3,6 +3,7 @@ package com.kambi.betting.producer;
 import com.kambi.betting.model.BettingEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ import java.util.UUID;
 - like Sportradar or Betradar.
   */
   @Component
+  @ConditionalOnProperty(name ="spring.kafka.enabled", havingValue = "true", matchIfMissing = false)
   public class BettingEventSimulator {
   
   private static final Logger log = LoggerFactory.getLogger(BettingEventSimulator.class);
